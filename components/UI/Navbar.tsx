@@ -2,25 +2,13 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { FiMenu, FiX, FiLogIn, FiUserPlus, FiSun, FiMoon } from "react-icons/fi";
+import { FiMenu, FiX, FiLogIn, FiUserPlus } from "react-icons/fi";
 import { IoNotificationsOutline } from "react-icons/io5";
 import SideBar from "./SideBar";
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
-  const [theme, setTheme] = useState("light");
   const [scrolled, setScrolled] = useState(false);
-
-  // Handle theme toggle
-  useEffect(() => {
-    if (theme === "dark") {
-      document.documentElement.classList.add("dark");
-    } else {
-      document.documentElement.classList.remove("dark");
-    }
-  }, [theme]);
-
-  const toggleTheme = () => setTheme(theme === "light" ? "dark" : "light");
 
   useEffect(() => {
     const handleScroll = () => {
@@ -57,11 +45,11 @@ const Navbar = () => {
 
       {/* Center: Nav links (hidden on mobile) */}
       <div className="hidden md:flex gap-6 font-medium">
-        <Link href="#" className="hover:text-blue-500">Home</Link>
-        <Link href="#" className="hover:text-blue-500">Games</Link>
-        <Link href="#" className="hover:text-blue-500">Tournaments</Link>
-        <Link href="#" className="hover:text-blue-500">About</Link>
-        <Link href="#" className="hover:text-blue-500">Contact</Link>
+        <Link href="/" className="hover:text-blue-500">Home</Link>
+        <Link href="/games" className="hover:text-blue-500">Games</Link>
+        <Link href="/tournaments" className="hover:text-blue-500">Tournaments</Link>
+        <Link href="/about" className="hover:text-blue-500">About</Link>
+        <Link href="/contact-us" className="hover:text-blue-500">Contact</Link>
       </div>
 
       {/* Right: Actions */}
@@ -76,25 +64,6 @@ const Navbar = () => {
         <button className="hover:text-blue-500">
           <FiUserPlus size={22} />
         </button>
-        <label className="flex items-center gap-2 cursor-pointer select-none">
-          {/* Icon changes based on theme */}
-          {theme === "light" ? <FiMoon size={20} /> : <FiSun size={20} />}
-
-          <input
-            type="checkbox"
-            checked={theme === "dark"}
-            onChange={(e) => setTheme(e.target.checked ? "dark" : "light")}
-            className="sr-only peer"
-          />
-
-          <div
-            className="relative w-[35px] h-5 bg-gray-200 rounded-full 
-            peer-focus:outline-none dark:bg-gray-700 peer-checked:bg-violet-500
-            after:content-[''] after:absolute after:top-0.5 after:start-0.5
-            after:bg-white after:rounded-full after:h-4 after:w-4 after:transition-all 
-            peer-checked:after:translate-x-[15px]"
-          ></div>
-        </label>
       </div>
 
       {/* Sidebar (mobile only) */}

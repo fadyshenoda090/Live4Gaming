@@ -36,7 +36,7 @@ export default function MouseTrail() {
 
     useEffect(() => {
         const canvas = canvasRef.current;
-        if (!canvas) return; // safety check
+        if (!canvas) return;
 
         const ctx = canvas.getContext("2d");
         if (!ctx) return;
@@ -78,13 +78,28 @@ export default function MouseTrail() {
                 const yc = 0.5 * (trail[i].y + trail[i + 1].y);
                 ctx.quadraticCurveTo(trail[i].x, trail[i].y, xc, yc);
                 ctx.lineWidth = params.widthFactor * (params.pointsNumber - i);
-                // Neon purple glow
-                ctx.strokeStyle = "rgb(170, 58, 196)";
-                ctx.shadowBlur = 20;
-                ctx.shadowColor = "rgb(170, 58, 196)";
-                ctx.globalAlpha = 0.2; // increase brightness slightly
+
+                // COD Orange/Amber Theme
+                const gradient = ctx.createLinearGradient(
+                    trail[i].x,
+                    trail[i].y,
+                    trail[i + 1].x,
+                    trail[i + 1].y
+                );
+
+                // Orange gradient from light to dark
+                gradient.addColorStop(0, "rgba(251, 191, 36, 0.8)");    // amber-300
+                gradient.addColorStop(0.5, "rgba(245, 158, 11, 0.6)");  // amber-500
+                gradient.addColorStop(1, "rgba(234, 88, 12, 0.4)");     // orange-600
+
+                ctx.strokeStyle = gradient;
+                ctx.shadowBlur = 15 + (i * 0.5);
+                ctx.shadowColor = "rgba(245, 158, 11, 0.7)"; // amber-500 glow
+                ctx.globalAlpha = 0.3 - (i * 0.006); // Fade out towards the end
                 ctx.stroke();
-                ctx.shadowBlur = 0; // reset to avoid affecting next frame
+
+                // Reset shadow to avoid affecting next frame
+                ctx.shadowBlur = 0;
                 ctx.globalAlpha = 1;
             }
 
@@ -114,7 +129,7 @@ export default function MouseTrail() {
                 top: 0,
                 left: 0,
                 zIndex: 9999,
-                pointerEvents: "none", // allows clicks to pass through
+                pointerEvents: "none",
             }}
         />
     );

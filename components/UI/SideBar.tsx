@@ -1,20 +1,11 @@
 "use client";
 import Link from 'next/link';
 import React, { useEffect, useRef, useState } from 'react';
-import { FiMoon, FiSun } from 'react-icons/fi';
 import { IoIosCloseCircleOutline } from 'react-icons/io';
 
 const SideBar = ({ setMenuOpen }: { setMenuOpen: React.Dispatch<React.SetStateAction<boolean>> }) => {
-    const [theme, setTheme] = useState("light");
     const [isVisible, setIsVisible] = useState(false);
     const drawerRef = useRef<HTMLDivElement>(null);
-
-    // Add/remove dark mode class
-    useEffect(() => {
-        document.documentElement.classList.toggle("dark", theme === "dark");
-    }, [theme]);
-
-    const toggleTheme = () => setTheme(theme === "light" ? "dark" : "light");
 
     const handleClickOutside = (event: MouseEvent) => {
         if (drawerRef.current && !drawerRef.current.contains(event.target as Node)) {

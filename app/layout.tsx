@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Inter, Orbitron } from "next/font/google";
 import "./globals.css";
 import MouseTrail from "@/components/mouseTrail/MouseTrail";
+import Navbar from "@/components/UI/Navbar";
+import Footer from "@/components/UI/Footer";
 
 const orbitron = Orbitron({
   variable: "--font-orbitron",
@@ -28,8 +30,13 @@ export default function RootLayout({
       <body
         className={`${orbitron.variable} ${inter.variable} min-h-screen antialiased`}
       >
-        <MouseTrail />
+        <MouseTrail /> {/* Navbar */}
+        <Navbar />
+
         {children}
+
+        {/* Footer */}
+        <Footer />
       </body>
     </html>
   );
