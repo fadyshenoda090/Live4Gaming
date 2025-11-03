@@ -1,0 +1,49 @@
+// app/components/RelatedGames.tsx
+import Image from "next/image";
+import Link from "next/link";
+import type { Game } from "@/types/types";
+
+interface RelatedGamesProps {
+    related: Game[];
+    currentGameId: string;
+}
+
+const RelatedGames = ({ related, currentGameId }: RelatedGamesProps) => {
+    // exclude the current game
+    const filtered = related.filter((g) => g.id !== currentGameId);
+
+    if (filtered.length === 0)
+        return (
+            <p className="text-gray-400 text-center mt-6">No related games found.</p>
+        );
+
+    return (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+            {filtered.map((game) => (
+                <Link
+                    href={`/games/${game.id}`}
+                    key={game.id}
+                    className="group block bg-gray-800/50 border border-gray-700 rounded-2xl overflow-hidden hover:border-amber-500 hover:shadow-[0_0_20px_rgba(245,158,11,0.3)] transition-all duration-300"
+                >
+                    <div className="relative w-full h-56">
+                        <Image
+                            src={game.image}
+                            alt={game.title}
+                            fill
+                            className="object-cover group-hover:scale-105 transition-transform duration-500"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                    </div>
+                    <div className="p-4">
+                        <h3 className="text-lg font-bold text-white truncate">
+                            {game.title}
+                        </h3>
+                        <p className="text-amber-400 text-sm mt-1">{game.genre}</p>
+                    </div>
+                </Link>
+            ))}
+        </div>
+    );
+};
+
+export default RelatedGames;

@@ -1,29 +1,24 @@
-import { Game } from '@/types/types';
+
 import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import React from 'react'
+import {games} from '../../api/db';
+import RelatedGames from "@/components/UI/RelatedGames";
 
-const GameDetails = async ({ params }: { params: Promise<{ id: string }> }) => {
-    const { id } = await params;
+interface Props {
+    params: Promise<{ id: string }>;
+}
 
-    const res = await fetch(`http://localhost:3000/api/games/${id}`, {
-        cache: 'force-cache'
-    });
+const GameDetails = async ({ params }: Props)=> {
+    const { id } = await params; // ✅ unwrap the Promise
 
-    console.log(`${res}`);
+    const game = games.find((g) => g.id.toLowerCase() === id.toLowerCase());
+    if (!game) notFound();
 
+    const relatedGames = games.filter(
+        (g) => g.genre.toLowerCase() === game.genre.toLowerCase()
+    );
 
-    if (!res.ok) {
-        notFound()
-    }
-
-    const game: Game = await res.json();
-
-
-    if (!game) {
-        notFound()
-    }
     return (
         <div className="min-h-screen bg-gray-900 pt-20">
             {/* Hero Section */}
@@ -38,7 +33,6 @@ const GameDetails = async ({ params }: { params: Promise<{ id: string }> }) => {
                                     src={game.image}
                                     alt={game.title}
                                     fill
-                                    className="object-cover"
                                 />
                                 <div className="absolute inset-0 bg-gradient-to-t from-gray-900/50 to-transparent" />
                             </div>
@@ -118,26 +112,19 @@ const GameDetails = async ({ params }: { params: Promise<{ id: string }> }) => {
                 <div className="container mx-auto">
                     <div className="text-center mb-12">
                         <h2 className="text-3xl sm:text-4xl font-black uppercase tracking-wider mb-4">
-                            <span className="text-white">MORE</span>
+                            <span className="text-white">MORE </span>
                             <span className="bg-gradient-to-r from-amber-500 via-orange-500 to-amber-300 bg-clip-text text-transparent">
-                                GAMES
-                            </span>
+                GAMES
+              </span>
                         </h2>
                         <div className="w-20 h-1 bg-gradient-to-r from-amber-500 to-orange-500 mx-auto mb-4" />
-                        <p className="text-gray-300">Discover other amazing titles</p>
+                        <p className="text-gray-300">
+                            Discover other {game.genre} games
+                        </p>
                     </div>
 
-                    <div className="flex justify-center">
-                        <Link
-                            href="/games"
-                            className="inline-flex items-center gap-3 px-8 py-4 bg-transparent border-2 border-gray-500 rounded-lg 
-                                font-bold text-white text-lg uppercase tracking-wider hover:border-amber-500 
-                                hover:bg-amber-500/10 transition-all duration-300 group"
-                        >
-                            <span>View All Games</span>
-                            <div className="w-3 h-3 border-r-2 border-t-2 border-white rotate-45 transform group-hover:border-amber-500 transition-colors duration-300" />
-                        </Link>
-                    </div>
+                    {/* 👇 Pass related games */}
+                    <RelatedGames related={relatedGames} currentGameId={game.id} />
                 </div>
             </section>
         </div>
