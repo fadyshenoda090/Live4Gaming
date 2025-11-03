@@ -1,22 +1,21 @@
 import Image from 'next/image'
-import React from 'react'
 
 const Hero = () => {
     return (
-        <section className="relative overflow-hidden mb-10">
-            <div className="relative min-h-[70vh] lg:min-h-screen flex items-center justify-center">
+        <section className="relative overflow-hidden">
+            <div className="relative min-h-screen flex items-center justify-center">
                 {/* Background Image with Military-style Overlay */}
                 <div className="absolute inset-0 z-0">
                     <Image
                         src="/hero.png" // Use a COD-style military image
                         alt="Call of Duty Battle Scene"
                         fill
-                        loading='lazy'
+                        loading='eager'
                     />
                     {/* Military Gradient Overlay */}
                     <div className="absolute inset-0 bg-linear-to-br from-black/80 via-gray-900/60 to-amber-900/20" />
                     {/* Tactical Grid Pattern */}
-                    <div className="absolute inset-0 bg-[linear-gradient(rgba(139,69,19,0.1)_1px,transparent_1px),linear-gradient(90deg,rgba(139,69,19,0.1)_1px,transparent_1px)] bg-size-[32px_32px]" />
+                    <div className="absolute inset-0 bg-[linear-gradient(rgba(139,69,19,0.2)_1px,transparent_1px),linear-gradient(90deg,rgba(139,69,19,0.2)_1px,transparent_1px)] bg-size-[32px_32px]" />
                 </div>
 
                 {/* Battle Scene Elements */}

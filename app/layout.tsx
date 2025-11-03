@@ -4,6 +4,7 @@ import "./globals.css";
 import MouseTrail from "@/components/mouseTrail/MouseTrail";
 import Navbar from "@/components/UI/Navbar";
 import Footer from "@/components/UI/Footer";
+import { Suspense } from "react";
 
 const orbitron = Orbitron({
   variable: "--font-orbitron",
@@ -36,7 +37,9 @@ export default function RootLayout({
         {children}
 
         {/* Footer */}
-        <Footer />
+        <Suspense fallback={<div className="text-center text-gray-400">Loading footer...</div>}>
+          <Footer />
+        </Suspense>
       </body>
     </html>
   );

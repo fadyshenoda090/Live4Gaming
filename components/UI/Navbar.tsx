@@ -20,7 +20,7 @@ const Navbar = () => {
   }, []);
 
   return (
-    <nav className={`w-full sticky top-0 z-50 px-6 py-3 flex justify-between items-center border-b border-gray-300 dark:border-gray-700 text-gray-900 dark:text-gray-100 transition-all duration-300
+    <nav className={`w-full fixed top-0 z-50 px-6 py-3 flex justify-between items-center border-b border-gray-300 dark:border-gray-700 text-gray-900 dark:text-gray-100 transition-all duration-300
         ${scrolled
         ? "backdrop-blur-sm bg-white/70 dark:bg-gray-900/70 shadow-sm"
         : "bg-white dark:bg-gray-900"
