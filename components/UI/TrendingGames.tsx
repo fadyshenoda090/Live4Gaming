@@ -1,45 +1,58 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import {useEffect, useState} from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import Carousel from 'react-multi-carousel'
 import 'react-multi-carousel/lib/styles.css'
-import { Game } from '@/types/types'
+import {Game} from '@/types/types'
 
 const TrendingGames = () => {
     const [trendingGames, setTrendingGames] = useState<Game[]>([])
 
-    const fetchTrendingGames = async () => {
-        const res = await fetch('http://localhost:3000/api/games', {
-            cache: 'force-cache'
-        })
-        const games = await res.json()
-        setTrendingGames(games.slice(0, 8))
-    }
-
     useEffect(() => {
-        fetchTrendingGames()
-    }, [])
+        let isMounted = true;
+
+        const fetchTrendingGames = async () => {
+            try {
+                const res = await fetch("http://localhost:3000/api/games", {
+                    cache: "no-store",
+                });
+
+                if (!res.ok) return;
+
+                const data = await res.json();
+                if (isMounted) setTrendingGames(data.data.slice(0, 8));
+            } catch (err) {
+                console.error("Failed to fetch trending games:", err);
+            }
+        };
+
+        fetchTrendingGames();
+
+        return () => {
+            isMounted = false; // cleanup to prevent setting state after unmount
+        };
+    }, []);
 
     const responsive = {
         superLargeDesktop: {
-            breakpoint: { max: 4000, min: 1280 },
+            breakpoint: {max: 4000, min: 1280},
             items: 4,
             partialVisibilityGutter: 20,
         },
         desktop: {
-            breakpoint: { max: 1280, min: 1024 },
+            breakpoint: {max: 1280, min: 1024},
             items: 3,
             partialVisibilityGutter: 15,
         },
         tablet: {
-            breakpoint: { max: 1024, min: 640 },
+            breakpoint: {max: 1024, min: 640},
             items: 2,
             partialVisibilityGutter: 10,
         },
         mobile: {
-            breakpoint: { max: 640, min: 0 },
+            breakpoint: {max: 640, min: 0},
             items: 1,
         },
     }
@@ -52,12 +65,13 @@ const TrendingGames = () => {
                     <span className="text-white drop-shadow-[0_2px_2px_rgba(0,0,0,0.8)]">
                         TRENDING
                     </span>
-                    <br />
-                    <span className="bg-gradient-to-r from-amber-500 via-orange-500 to-amber-300 bg-clip-text text-transparent drop-shadow-[0_0_10px_rgba(245,158,11,0.5)]">
+                    <br/>
+                    <span
+                        className="bg-gradient-to-r from-amber-500 via-orange-500 to-amber-300 bg-clip-text text-transparent drop-shadow-[0_0_10px_rgba(245,158,11,0.5)]">
                         GAMES
                     </span>
                 </h2>
-                <div className="w-20 h-1 bg-gradient-to-r from-amber-500 to-orange-500 mx-auto mb-4" />
+                <div className="w-20 h-1 bg-gradient-to-r from-amber-500 to-orange-500 mx-auto mb-4"/>
                 <p className="text-gray-300 text-sm sm:text-base max-w-2xl mx-auto">
                     Most popular games right now
                 </p>
@@ -76,11 +90,10 @@ const TrendingGames = () => {
                 removeArrowOnDeviceType={['mobile']}
             >
                 {trendingGames.map((game, idx) => (
-                    <div
+                    <Link
+                        href={`/games/${game.id}`}
                         key={idx}
-                        className="group relative h-72 bg-gray-900 rounded-xl overflow-hidden border border-gray-700 
-            hover:scale-[1.02] hover:border-amber-500 hover:shadow-[0_0_25px_rgba(245,158,11,0.3)] 
-            transition-all duration-300"
+                        className="group relative h-72 bg-gray-800 flex-1 flex flex-col bg-color-dark-bg border border-gray-700 rounded-xl overflow-hidden hover:scale-[1.02] transition-all duration-300 hover:shadow-[0_0_25px_rgba(249,115,22,0.4)] hover:border-cod-orange"
                     >
 
                         <div className="relative h-48 w-full overflow-hidden">
@@ -92,8 +105,9 @@ const TrendingGames = () => {
                                 className="group-hover:scale-110 transition-transform duration-500"
                             />
                             <div className="absolute top-3 right-3 z-10">
-                                <div className="flex items-center gap-1 bg-gray-900/90 backdrop-blur-sm px-2 py-1 rounded-full border border-amber-500">
-                                    <div className="w-2 h-2 bg-amber-500 rounded-full animate-pulse" />
+                                <div
+                                    className="flex items-center gap-1 bg-gray-900/90 backdrop-blur-sm px-2 py-1 rounded-full border border-amber-500">
+                                    <div className="w-2 h-2 bg-amber-500 rounded-full animate-pulse"/>
                                     <span className="text-amber-300 text-sm font-bold">{game.rating}</span>
                                 </div>
                             </div>
@@ -108,12 +122,12 @@ const TrendingGames = () => {
                                     {game.genre}
                                 </span>
                                 <div className="flex items-center gap-1">
-                                    <div className="w-1.5 h-1.5 bg-orange-500 rounded-full animate-pulse" />
+                                    <div className="w-1.5 h-1.5 bg-orange-500 rounded-full animate-pulse"/>
                                     <span className="text-gray-400 text-xs">{game.developer}</span>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </Link>
                 ))}
             </Carousel>
         </section>

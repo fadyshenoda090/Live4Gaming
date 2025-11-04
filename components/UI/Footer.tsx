@@ -1,5 +1,6 @@
 'use client'
 import Link from 'next/link'
+import Image from "next/image";
 
 const Footer = () => {
   return (
@@ -10,7 +11,14 @@ const Footer = () => {
 
           {/* Brand Section */}
           <div className="lg:col-span-1">
-            <div className="mb-4">
+            <div className="mb-4 flex items-center gap-2">
+                <Image
+                    src={`/logo.png`}
+                    alt={`LiveForGaming`}
+                    width={40}
+                    height={40}
+                    className={`h-11 w-11 rounded-full`}
+                />
               <h2 className="text-2xl font-black uppercase tracking-wider">
                 <span className="text-white">LIVE4</span>
                 <span className="bg-gradient-to-r from-amber-500 via-orange-500 to-amber-300 bg-clip-text text-transparent">
@@ -18,23 +26,9 @@ const Footer = () => {
                 </span>
               </h2>
             </div>
-            <p className="text-gray-300 text-sm mb-6 leading-relaxed">
+            <p className="text-gray-300 text-sm leading-relaxed">
               Join the ultimate gaming platform where warriors unite, battles begin, and legends are born.
             </p>
-            <div className="flex space-x-3">
-              <div className="w-9 h-9 border border-gray-600 rounded-lg flex items-center justify-center hover:border-amber-500 hover:bg-amber-500/10 hover:shadow-[0_0_15px_rgba(245,158,11,0.3)] transition-all duration-300 cursor-pointer group">
-                <span className="text-gray-400 group-hover:text-amber-300 text-xs font-bold">D</span>
-              </div>
-              <div className="w-9 h-9 border border-gray-600 rounded-lg flex items-center justify-center hover:border-amber-500 hover:bg-amber-500/10 hover:shadow-[0_0_15px_rgba(245,158,11,0.3)] transition-all duration-300 cursor-pointer group">
-                <span className="text-gray-400 group-hover:text-amber-300 text-xs font-bold">T</span>
-              </div>
-              <div className="w-9 h-9 border border-gray-600 rounded-lg flex items-center justify-center hover:border-amber-500 hover:bg-amber-500/10 hover:shadow-[0_0_15px_rgba(245,158,11,0.3)] transition-all duration-300 cursor-pointer group">
-                <span className="text-gray-400 group-hover:text-amber-300 text-xs font-bold">T</span>
-              </div>
-              <div className="w-9 h-9 border border-gray-600 rounded-lg flex items-center justify-center hover:border-amber-500 hover:bg-amber-500/10 hover:shadow-[0_0_15px_rgba(245,158,11,0.3)] transition-all duration-300 cursor-pointer group">
-                <span className="text-gray-400 group-hover:text-amber-300 text-xs font-bold">Y</span>
-              </div>
-            </div>
           </div>
 
           {/* Quick Links */}

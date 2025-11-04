@@ -1,6 +1,6 @@
 import GamesGrid from "@/components/UI/GamesGrid";
 import Hero from "@/components/UI/Hero";
-import Tournaments from "./tournaments/page";
+import Tournaments from "@/components/UI/Tournaments";
 
 export default function Home() {
   return (

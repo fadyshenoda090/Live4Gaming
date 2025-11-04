@@ -1,6 +1,5 @@
 
 import Image from 'next/image';
-import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import {games} from '../../api/db';
 import RelatedGames from "@/components/UI/RelatedGames";
@@ -16,7 +15,7 @@ const GameDetails = async ({ params }: Props)=> {
     if (!game) notFound();
 
     const relatedGames = games.filter(
-        (g) => g.genre.toLowerCase() === game.genre.toLowerCase()
+        (g) => g.genre.toLowerCase() === game.genre.toLowerCase() || g.developer.toLowerCase() === game.developer.toLowerCase()
     );
 
     return (

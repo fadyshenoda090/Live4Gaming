@@ -1,23 +1,33 @@
-import { NextResponse } from "next/server";
-import { tournaments } from "../../db";
-import type { Tournament } from "@/types/types";
+import { NextRequest, NextResponse } from 'next/server';
 
-interface EnrollBody {
-    tournamentId: string;
-    userId: string;
-}
+export async function POST(request: NextRequest) {
+    try {
+        const { tournamentId, playerName } = await request.json();
 
-export async function POST(req: Request): Promise<NextResponse<{ message: string }>> {
-    const { tournamentId, userId } = (await req.json()) as EnrollBody;
+        if (!tournamentId || !playerName) {
+            return NextResponse.json(
+                { message: 'Tournament ID and player name are required' },
+                { status: 400 }
+            );
+        }
 
-    const tournament: Tournament | undefined = tournaments.find(
-        (t: Tournament) => t.id === tournamentId
-    );
+        // Here you would typically save to a database
+        console.log(`Enrolling ${playerName} in tournament ${tournamentId}`);
 
-    if (!tournament)
-        return NextResponse.json({ message: "Tournament not found" }, { status: 404 });
+        // Simulate processing
+        await new Promise(resolve => setTimeout(resolve, 1000));
 
-    return NextResponse.json({
-        message: `User ${userId} enrolled in ${tournament.title}`,
-    });
+        return NextResponse.json({
+            message: `Successfully enrolled ${playerName} in the tournament!`,
+            tournamentId,
+            playerName
+        });
+
+    } catch (error) {
+        console.error('Enrollment error:', error);
+        return NextResponse.json(
+            { message: 'Internal server error' },
+            { status: 500 }
+        );
+    }
 }

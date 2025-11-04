@@ -92,7 +92,7 @@
 /* Dark mode preference */
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #050507;
+    --background: #101828;
     --foreground: #EAEAEA;
   }
 }

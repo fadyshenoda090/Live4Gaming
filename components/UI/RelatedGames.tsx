@@ -30,16 +30,23 @@ const RelatedGames = ({ related, currentGameId }: RelatedGamesProps) => {
                             src={game.image}
                             alt={game.title}
                             fill
-                            className="object-cover group-hover:scale-105 transition-transform duration-500"
+                            className="group-hover:scale-105 transition-transform duration-500"
                         />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
                     </div>
-                    <div className="p-4">
-                        <h3 className="text-lg font-bold text-white truncate">
-                            {game.title}
-                        </h3>
-                        <p className="text-amber-400 text-sm mt-1">{game.genre}</p>
-                    </div>
+                   <div className={`p-4 flex items-center justify-between`}>
+                       <div className="">
+                           <h3 className="text-lg font-bold text-white truncate">
+                               Genre
+                           </h3>
+                           <p className="text-amber-400 text-sm mt-1">{game.genre}</p>
+                       </div>
+                       <div className="">
+                           <h3 className="text-lg font-bold text-white truncate">
+                               Developer
+                           </h3>
+                           <p className="text-amber-400 text-sm mt-1">{game.developer}</p>
+                       </div>
+                   </div>
                 </Link>
             ))}
         </div>

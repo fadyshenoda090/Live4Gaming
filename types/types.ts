@@ -39,6 +39,8 @@ export interface User {
 
 export interface Tournament {
     id: string;
+    game:string
+    genre: string;
     title: string;
     gameId: string; // references a Game.id
     image: string;
